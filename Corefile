@@ -2,5 +2,13 @@
    log
    health
    cache 30
+   loadbalance round_robin
+   forward  . 8.8.8.8 8.8.4.4 114.114.114.114
+}
+
+dalongrong.com:53 {
+   log
+   health
+   cache 30
    forward  . 192.168.1.4
 }
