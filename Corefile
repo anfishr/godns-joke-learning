@@ -1,0 +1,6 @@
+.:53 {
+   log
+   health
+   cache 30
+   forward  . 192.168.1.4
+}
