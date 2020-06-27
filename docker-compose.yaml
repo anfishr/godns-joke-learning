@@ -5,12 +5,14 @@ services:
      ports: 
      - "6379:6379"
   joke: 
+     image: dalongrong/godns:joke
      build: 
       context: ./
       dockerfile: ./Dockerfile-joke
      ports: 
      - "1223:1223"
   godns: 
+     image: dalongrong/godns
      build: 
       context: ./
       dockerfile: ./Dockerfile-godns
