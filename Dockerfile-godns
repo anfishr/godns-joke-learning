@@ -1,0 +1,21 @@
+FROM golang:1.13-alpine AS build-env
+WORKDIR /go/src/app
+RUN  /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories
+
+ENV  GO111MODULE=on
+ENV  GOPROXY=https://goproxy.cn
+COPY code/godns/ .
+RUN apk update && apk add git \
+    && go build
+
+FROM alpine:latest
+WORKDIR /app
+RUN  /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+COPY --from=ochinchina/supervisord:latest /usr/local/bin/supervisord /usr/local/bin/supervisord
+COPY --from=build-env /go/src/app/godns /app/godns
+COPY supervisor-godns.conf /etc/supervisord.conf
+COPY godns.conf /etc/godns.conf
+
+EXPOSE 53/udp 53 9001
+CMD ["/usr/local/bin/supervisord"]

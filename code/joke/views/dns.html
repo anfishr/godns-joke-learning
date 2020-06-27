@@ -1,0 +1,50 @@
+
+            <hr>
+
+            <div class="row">
+                <div class="span12">
+                    <p><button id="create-record" class="btn btn-primary"><i class="icon-plus "></i> ADD</button></p>
+                </div>
+
+                <div class="span12">
+                    <table class="table table-striped table-bordered table-hover hosts-record">
+                        <thead>
+                            <tr class="success">
+                                <th>Domain</th>
+                                <th>IP</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="record-add">
+                        </tbody>
+                        <tbody id="record-list">
+        
+                            {{range $k,$v:=.Hosts}}
+                            <tr class="entry">
+                                <td id="domain">{{$k}}</td>
+                                <td id="ip">{{$v}}</td>
+                                <td class="action">
+                                    <button id="edit-record" class="btn btn-info btn-small" onclick="edit_record(this)">
+                                        <i class="icon-edit"></i> Edit
+                                    </button>
+                                    <button id="del-record" class="btn btn-danger btn-small" onclick="del_record(this)">
+                                        <i class="icon-remove"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            {{end}}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+                <div class="span12 redis-label">
+                    Redis: <span class="label label-info">{{.Redis}}</span>
+                </div>
+            </div>
+
+         
